@@ -1,5 +1,6 @@
 function timerIntervalFunc() {
     var now = new Date();
+
     var hour = now.getHours();
     var min = now.getMinutes();
     var sec = now.getSeconds();
