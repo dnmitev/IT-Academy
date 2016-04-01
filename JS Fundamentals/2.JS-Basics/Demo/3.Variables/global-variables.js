@@ -1,1 +1,1 @@
-var globalVariable = 'Pesho';
+globalVariable = 'Pesho';
