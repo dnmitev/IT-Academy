@@ -12,6 +12,7 @@ var Shapes = (function() {
                     x: this._x,
                     y: this._y
                 };
+
                 return serializedShape;
             }
         };
@@ -31,10 +32,13 @@ var Shapes = (function() {
 
         Rect.prototype.serialize = function() {
             var serializedRect = Shape.prototype.serialize.call(this);
+
             serializedRect.width = this._width;
             serializedRect.height = this._height;
+
             return serializedRect;
         };
+
         return Rect;
     }());
 
