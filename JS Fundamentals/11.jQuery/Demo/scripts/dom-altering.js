@@ -10,8 +10,5 @@
     $('body').append($myDiv);
 
     debugger;    
-    $("div").remove(".hello");
-
-    var content = document.createElement('div');
-    var $content = $(content);
+    $("div").remove(".hello");azure
 })();
