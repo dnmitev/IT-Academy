@@ -1,4 +1,4 @@
-var Garage = (function() {
+var Garage = (function () {
     "use strict";
 
     const MIN_NAME_LENGTH = 3;
@@ -10,6 +10,20 @@ var Garage = (function() {
     const VEHICLE_TYPES = ['car', 'truck', 'bike', 'bus'];
 
     let _vehicles = [];
+
+    function _getLexicographicalSortByMake(first, second) {
+        var firstName = first.make.toLowerCase(),
+            secondName = second.make.toLowerCase();
+
+        if (firstName < secondName) {
+            return -1;
+        } else if (firstName > secondName) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     class Garage {
         constructor(name, limit, typeOfVehicles) {
@@ -23,7 +37,7 @@ var Garage = (function() {
         }
 
         set name(value) {
-            if (typeof(value) !== 'string' || !isNaN(value * 1)) {
+            if (typeof (value) !== 'string' || !isNaN(value * 1)) {
                 throw new Error('Name must be a string');
             } else if (value.length < MIN_NAME_LENGTH) {
                 throw new Error(`Name has invalid length. Name is too short.`);
@@ -39,7 +53,7 @@ var Garage = (function() {
         }
 
         set limit(limitValue) {
-            if (typeof(limitValue) !== 'number') {
+            if (typeof (limitValue) !== 'number') {
                 throw new Error('Limit value should be a number');
             } else if (limitValue < MIN_LIMIT_VALUE) {
                 throw new Error(`Limit value cannot be below ${MIN_LIMIT_VALUE}`);
@@ -69,38 +83,52 @@ var Garage = (function() {
         addVehicle(vehicle) {
             if (this.vehiclesCount === this.limit) {
                 throw new Error(`Garage is already full. The limit is ${this.limit}`);
+            } else if (!(vehicle instanceof Vehicle)) {
+                throw new Error('You should add only instances of Vehicle');
             }
 
             _vehicles.push(vehicle);
         }
 
-        removeVehicle(vehicle) {
-            // TODO
+        removeVehicle(licensePlate) {
+            let tempVehicles = [];
+            for (var i = 0; i < _vehicles.length; i++) {
+                let item = _vehicles[i];
+
+                if (item.plate === licensePlate) {
+                    continue;
+                }
+
+                tempVehicles.push(item);
+            }
+
+            _vehicles = tempVehicles;
         }
 
         getVehiclesList() {
             return _vehicles
-                .sort(function(a, b) {
-                    return a.toLowerCase() > b.toLowerCase();
+                .sort(_getLexicographicalSortByMake)
+                .map(function (vehicle) {
+                    return vehicle.getInfo();
                 })
-                .join('|');
+                .join('\n');
         }
 
-        filter(value) {
-            // TODO
+        filter(searchValue, propName) {
+            let itemsToReturn = [],
+                item;
+
+            for (let i = 0; i < _vehicles.length; i++) {
+                item = _vehicles[i];
+
+                if (item[propName].toLowerCase() === searchValue.toLowerCase()) {
+                    itemsToReturn.push(item);
+                }
+            }
+
+            return itemsToReturn;
         }
     }
 
     return Garage;
-}());
-
-// var bpGarage = new Garage("bpsf", 20, "car");
-// console.log(bpGarage.vehiclesCount);
-// for (let i = 0; i < 15; i++) {
-//     bpGarage.addVehicle("vw" + (15 - i));
-// }
-
-// console.log(bpGarage.vehiclesCount);
-// console.log(bpGarage._vehicles);
-
-// console.log(bpGarage.getVehiclesList());
+} ());

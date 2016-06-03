@@ -1,12 +1,36 @@
-var Car = (function() {
+var Car = (function () {
     "use strict";
+
+    const MIN_DOORS_COUNT = 3;
+    const MAX_DOORS_COUNT = 5;
+
+    const MIN_STORAGE_VOLUME = 50;
+    const MAX_STORAGE_VOLUME = 500;
 
     let _hasSecondFuelType = false;
 
+    function _validateNumber(value, prop) {
+        if (typeof (value) !== 'number' || isNaN(value * 1)) {
+            throw new Error(`${prop} must be a number`);
+        }
+    }
+
+    function _validateMinNumber(value, min, prop) {
+        if (value < min) {
+            throw new Error(`${prop} must be bigger than ${min}`);
+        }
+    }
+
+    function _validateMaxNumber(value, max, prop) {
+        if (value > max) {
+            throw new Error(`${prop} must be less than ${max}`);
+        }
+    }
+
     class Car extends Vehicle {
-        constructor(make, model, plate, type, tankVolume,
+        constructor(make, model, plate, tankVolume,
             fuelType, doorsCount, storageVolume) {
-            super(make, model, plate, type, tankVolume, fuelType);
+            super(make, model, plate, tankVolume, fuelType);
 
             this.doorsCount = doorsCount;
             this.storageVolume = storageVolume;
@@ -17,7 +41,12 @@ var Car = (function() {
         }
 
         set doorsCount(value) {
-            // TODO: validate
+            let propName = 'doorsCount';
+
+            _validateNumber(value, propName);
+            _validateMinNumber(value, MIN_DOORS_COUNT, propName);
+            _validateMaxNumber(value, MAX_DOORS_COUNT, propName);
+
             this._doorsCount = value;
         }
 
@@ -26,7 +55,12 @@ var Car = (function() {
         }
 
         set storageVolume(value) {
-            // TODO: validate
+            let propName = 'storageVolume';
+
+            _validateNumber(value, propName);
+            _validateMinNumber(value, MIN_STORAGE_VOLUME, propName);
+            _validateMaxNumber(value, MAX_STORAGE_VOLUME, propName);
+
             this._storageVolume = value;
         }
 
@@ -43,19 +77,13 @@ var Car = (function() {
         }
 
         addLpg() {
-            // TODO: validate Petrol
-            _hasSecondFuelType = true;
+            if (this.fuelType.toUpperCase() == 'PETROL') {
+                _hasSecondFuelType = true;
+            } else {
+                throw new Error('LPG can be added only to cars with fuel type of PETROL');
+            }
         }
     }
 
     return Car;
-}());
-
-var vw = new Car('vw', 'passat', 'CB2222AB', 'Car', 50, 'Petrol', 5, 100);
-console.log(vw.totalDistance);
-vw.move(100);
-console.log(vw.totalDistance);
-console.log(vw.getInfo());
-console.log(vw.secondFuelType);
-vw.addLpg();
-console.log(vw.secondFuelType);
+} ());
