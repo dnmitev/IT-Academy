@@ -1,8 +1,7 @@
-(function () {
+(function() {
     "use strict";
 
     var liElement = document.createElement("li");
-
     console.log(liElement instanceof HTMLLIElement); //true
     console.log(liElement instanceof HTMLElement); //true
     console.log(liElement instanceof HTMLDivElement); //false

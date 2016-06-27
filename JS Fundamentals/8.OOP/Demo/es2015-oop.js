@@ -9,7 +9,7 @@ class Person {
     }
 
     set name(value) {
-        if (value < 2) {
+        if (value.length < 2) {
             throw new Error(`Person name is too short: ${value.length}`);
         }
 
