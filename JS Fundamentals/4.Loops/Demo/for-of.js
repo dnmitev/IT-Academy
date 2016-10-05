@@ -1,4 +1,11 @@
-var arr = ['One', 'Two', 'Three', 'Four'];
-for (var n of arr) {
-    console.log(n);
+var obj =  {
+    "monday": "понеделник",
+    "tuesday": "вторник"
+};
+// for (var val of obj) {
+//     console.log(val);
+// }
+
+for (var key in obj) {
+    console.log(key)
 }

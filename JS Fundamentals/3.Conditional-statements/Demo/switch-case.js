@@ -16,3 +16,5 @@ switch (day) {
         console.log('Error!');
         break;
 }
+
+console.log('after');

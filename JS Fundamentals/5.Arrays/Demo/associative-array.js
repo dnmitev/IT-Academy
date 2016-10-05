@@ -9,6 +9,7 @@ var weekdays = {
 };
 
 for (var day in weekdays) {
+    debugger;
     console.log(`${day} -> ${weekdays[day]}`);
 }
 

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Strings</title>
+</head>
+
+<body>
+    <script>
+        String.prototype.getUppercasedName = function () {
+            var name = this;
+            var uppercasedName = 
+                name[0].toUpperCase() + name.substr(1).toLowerCase();
+
+            return uppercasedName;
+        }
+
+        String.prototype.getHyphaneted = function () {
+            var str = this;
+
+            return str.split(' ').join('--');
+        }
+
+        String.prototype.getEscapedHtml = function () {
+            var str = this;
+            var escaped = '';
+
+            for (var i = 0; i < str.length; i++) {
+                var currentChar = str[i];
+                switch (currentChar) {
+                    case '<': escaped += '&lt;'; break;
+                    case '>': escaped += '&gt;'; break;
+                    case '/': escaped += '&#47;'; break;
+                    default: escaped += currentChar; break;
+                }
+            }       
+
+            return escaped;
+
+            // Regular Expressions solution
+            // return str
+            //         .replace(/&/g, "&amp;")
+            //         .replace(/</g, "&lt;")
+            //         .replace(/>/g, "&gt;")
+            //         .replace(/"/g, "&quot;")
+            //         .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+
+</html>
