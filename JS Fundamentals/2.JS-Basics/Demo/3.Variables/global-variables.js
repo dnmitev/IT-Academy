@@ -1,1 +1,1 @@
-globalVariable = 'Pesho';
+globalVariable = 'Pesho'; // FORBIDDEN!!!!!
