@@ -7,7 +7,7 @@ switch (day) {
     case 4:
     case 5:
         console.log('Working day');
-        break;
+        return;
     case 6:
     case 7:
         console.log('Weekend!');

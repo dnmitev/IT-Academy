@@ -15,4 +15,9 @@ if (first > second) {
     biggest = third;
 }
 
-console.log(`The biggest number is ${biggest}`);
+console.log(
+    `The biggest number is ${biggest} from numbers: ${first}, ${second}, ${third}`);
+
+console.log(
+    'The biggest number is ' + biggest + ' from numbers ' +
+    first + ', ' + second + ', ' + third);

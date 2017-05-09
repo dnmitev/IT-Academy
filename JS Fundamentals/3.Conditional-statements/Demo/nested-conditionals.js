@@ -1,6 +1,6 @@
 var n = 3;
 
-if (n) {
+if (!isNaN(n / 2)) {
     if (n % 2) {
         console.log('Odd!');
     } else {
