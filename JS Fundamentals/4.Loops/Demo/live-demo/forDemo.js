@@ -8,7 +8,6 @@
 
         if (i % myVar) {
             console.log('Si, senior!');
-            break;
         }
 
         counter++;

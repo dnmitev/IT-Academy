@@ -1,7 +1,7 @@
 // var sum = 0;
 // var counter = 0;
 
-// while (counter <= 3) {
+// while (counter <= 10) {
 //     debugger;
 //     sum += counter; // sum = sum + counter
 //     counter++;
@@ -15,7 +15,7 @@
 
 
 var fact = 1,
-    n = 3;
+    n = 5;
 
 do {
     debugger;
