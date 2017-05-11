@@ -17,19 +17,19 @@ var matrix = [
     ['2,0', '2,1', '2,2']
 ];
 
-// console.log(weekDays[0]); // Monday
-// console.log(weekDays.length); // 7
-// console.log(matrix[0][1]); // 0,1
+console.log(weekDays[0]); // Monday
+console.log(weekDays.length); // 7
+console.log(matrix[0][1]); // 0,1
 
 // for (var i = 0; i < weekDays.length; i++) {
 //     console.log(weekDays[i]);
 // }
 
-for (var i = weekDays.length - 3; i >= 0; i--) {
-    debugger;
-    console.log(weekDays[i]);
-}
-
-// for (var dayNumber in weekDays) {
-//   console.log(`${dayNumber} ----> ${weekDays[dayNumber]}`);
+// for (var i = weekDays.length - 1; i >= 0; i--) {
+//     debugger;
+//     console.log(weekDays[i]);
 // }
+
+for (var dayNumber in weekDays) {
+  console.log(`${dayNumber} ----> ${weekDays[dayNumber]}`);
+}
