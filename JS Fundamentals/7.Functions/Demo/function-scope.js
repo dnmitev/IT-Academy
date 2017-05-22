@@ -1,12 +1,12 @@
 var arr = [1, 2, 2, 2, 5, 6, 7];
+var count = 2;
 
-function countOccurences(value) {
-    // this function is coupled to the arr variable which is
-    // not totally right
+function countOccurences(value, collection) {
     var count = 0;
-    console.log(arr);
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] === value) {
+    debugger;
+    console.log(collection);
+    for (var i = 0; i < collection.length; i++) {
+        if (collection[i] === value) {
             count++;
         }
     }
@@ -14,21 +14,26 @@ function countOccurences(value) {
     return count;
 }
 
-//console.log(count); // 'count' is not defined
-console.log(countOccurences(2));
+console.log(count); // 'count' is not defined
+debugger;
+console.log(countOccurences(2, arr));
 
-function outer() {
-    var x = 'OUTER';
+// function outer() {
+//     var x = 'OUTER';
+//     debugger;
+//     function inner() {
+//         debugger;
+//         var x = 'INNER';
+//         return x;
+//     }
 
-    function inner() {
-        var x = 'INNER';
-        return x;
-    }
+//     return {
+//         x: x,
+//         f: inner()
+//     };
+// }
 
-    return {
-        x: x,
-        f: inner()
-    };
-}
+// // inner(); // this line of code would produce error since inner() is 
+// defined in the scope of outer()
 
-console.log(outer());
+// console.log(outer());

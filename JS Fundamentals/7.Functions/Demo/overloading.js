@@ -16,7 +16,7 @@
 // printText(5); //logs 5
 // console.log('------------------');
 // debugger;
-// printText(5, 'Lorem Ipsum', 3); //logs 5 and Lorem Ipsum
+// printText(5, 'Lorem Ipsum'); //logs 5 and Lorem Ipsum
 
 function print(number) {
     console.log('Number: ' + number);
@@ -26,4 +26,4 @@ function print(number, text) {
     console.log('Number: ' + number + '\nText: ' + text);
 }
 
-print('asdas');
+print(5);

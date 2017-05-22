@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     var greeting = 'Hello from the IIFE!';
@@ -13,7 +13,7 @@
 // the line below will produce an error -> ReferenceError: greeting is not defined
 // console.log(greeting);
 
-var today = (function() {
+var today = (function () {
     'use strict';
 
     var date = new Date();

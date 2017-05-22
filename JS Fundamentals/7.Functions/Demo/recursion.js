@@ -1,4 +1,7 @@
+var counter = 0;
 var fact = function(n) {
+    counter++;
+    debugger;
     if (n === 0) {
         return 1;
     }
@@ -7,3 +10,4 @@ var fact = function(n) {
 };
 
 console.log(fact(5)); // 120
+console.log(counter);

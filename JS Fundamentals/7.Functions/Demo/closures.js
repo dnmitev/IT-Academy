@@ -1,5 +1,7 @@
 function outer(x) {
+    debugger;
     function inner(y) {
+        debugger;
         return x + " " + y;
     }
 
@@ -7,4 +9,5 @@ function outer(x) {
 }
 
 var sample = outer("IT");
+debugger;
 console.log(sample("Academy"));
