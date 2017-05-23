@@ -1,11 +1,14 @@
-function Person(name) {
+function Person(theName) {
     debugger;
-    this.name = name;
-    this.getName = function getPersonName() {
-        return this.name;
-    }
+    this.name = theName;
 }
 
-var p = new Person("Gosho");
+Person.prototype.getName = function getPersonName() {
+    return this.name;
+}
 
-console.log(p.getName()); //Gosho
+var gosho = new Person("Gosho");
+var vanko1 = new Person("Vanko1");
+
+console.log(gosho.getName()); // Gosho
+console.log(vanko1.getName()); // Vanko1

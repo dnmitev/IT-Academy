@@ -1,4 +1,4 @@
-var Rect = (function() {
+var Rect = (function () {
     'use strict';
 
     var BORDERS = {
@@ -31,17 +31,26 @@ var Rect = (function() {
     }
 
     Rect.prototype = {
-        calcArea: function() {
+        calcArea: function () {
             return this._width * this._height;
         },
-        calcPerimeter: function() {
+        calcPerimeter: function () {
             return 2 * this._width + 2 * this._height;
         }
     };
 
+
+    // Another variant, not so good
+    // Rect.prototype.calcArea = function () {
+    //     return this._width * this._height;
+    // }
+
+    // Rect.prototype.calcPerimeter = function () {
+    //     return 2 * this._width + 2 * this._height;
+    // }
+
     return Rect;
 }());
 
-
 console.log(new Rect(1, 2, 30, 30).calcArea());
-console.log(new Rect(-1, 2, 30, 30).calcArea());
+// console.log(new Rect(-1, 2, 30, 30).calcArea());

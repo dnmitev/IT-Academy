@@ -8,6 +8,7 @@ var dog = {
     type: 'dog',
     noise: 'Woof-woof'
 };
+debugger;
 
 dog.__proto__ = animal;
 dog.makeNoise();

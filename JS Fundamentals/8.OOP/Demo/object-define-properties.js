@@ -86,6 +86,7 @@ for (var key in cat) {
     console.log(`${key} --> ${cat[key]}`);
 }
 
+debugger;
 cat.name = 'Gergana';
 cat.city = 'plovdiv';
 console.log(cat);
