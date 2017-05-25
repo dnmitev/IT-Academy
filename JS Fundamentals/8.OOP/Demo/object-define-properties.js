@@ -51,7 +51,7 @@ var cat = (function() {
 
             this._type = value;
         },
-        enumerable: false,
+        enumerable: false, // won't be listed in a for-in cycle -- this.type
         configurable: true
     });
 

@@ -15,6 +15,10 @@ var Shapes = (function () {
                 };
 
                 return serializedShape;
+            },
+            translate: function (xOffset, yOffset) {
+                this._x += xOffset;
+                this._y += yOffset;
             }
         };
 
@@ -39,6 +43,18 @@ var Shapes = (function () {
 
             return serializedRect;
         };
+
+        Rect.prototype.translate = function (xOffset, yOffset) {
+            var xDiff = this._x - xOffset;
+            var yDiff = this._y - yOffset;
+
+            // call the parent's method to change the X and Y
+            // coordinates accordingly
+            Shape.prototype.translate.call(this, xOffset, yOffset);
+
+            this._width -= xDiff;
+            this._height -= yDiff;
+        }
 
         return Rect;
     }());
@@ -68,3 +84,8 @@ var square = new Shapes.Square(4,9,15);
 console.log(shape.serialize());
 console.log(rect.serialize());
 console.log(square.serialize());
+
+rect.translate(15, 30);
+console.log(rect.serialize());
+shape.translate(5,10);
+console.log(shape.serialize());

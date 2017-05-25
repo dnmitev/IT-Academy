@@ -46,7 +46,28 @@ var dog = (function (parent) {
     return dog;
 }(animal));
 
-var notSheep = (function (parent) {
+var miniDog = (function (parent) {
+    var miniDog;
+
+    miniDog = Object.create(parent)
+
+    Object.defineProperty(miniDog, 'init', {
+        value: function (name, age, breed) {
+            parent.init.call(this, name, age, breed);
+            return this;
+        }
+    });
+
+    Object.defineProperty(miniDog, 'toString', {
+        value: function () {
+            return parent.toString.call(this) + ' Going to club 35';
+        }
+    });
+
+    return miniDog;
+})(dog);
+
+var sheep = (function (parent) {
     var sheep;
 
     sheep = Object.create(parent);
@@ -78,7 +99,13 @@ console.log(johny.toString());
 console.log(johny.breed);
 
 var sven = Object
-            .create(notSheep)
-            .init('Sven',10,'black');
+    .create(sheep)
+    .init('Sven', 10, 'black');
 console.log(sven.toString());
 console.log(sven.color);
+
+var fifi = Object
+    .create(miniDog)
+    .init('Fifi', 1, 'yorki');
+
+console.log(fifi.toString());

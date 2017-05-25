@@ -10,5 +10,13 @@ var dog = {
 };
 debugger;
 
-dog.__proto__ = animal;
+dog.__proto__ = animal; // var dog = new Animal('dog', 'woof-woof');
 dog.makeNoise();
+
+var cat = {
+    type: 'cat',
+    noise: 'miayu'
+}
+
+cat.__proto__ = animal;
+cat.makeNoise();

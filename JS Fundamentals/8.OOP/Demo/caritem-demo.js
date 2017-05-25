@@ -1,4 +1,4 @@
-var CarItem = (function() {
+var CarItem = (function () {
     "use strict";
 
     var premiumModels = ['Passat', 'Phaeton'];
@@ -15,6 +15,10 @@ var CarItem = (function() {
     Car.prototype = {
         move: function move() {
             console.log("Car is moving");
+        },
+        loadFuel: function loadFuel(petrol) {
+            console.log('- - - CAR - - -');
+            console.log(`Patrol: ${petrol}l`);
         }
     };
 
@@ -37,7 +41,7 @@ var CarItem = (function() {
     return Car;
 }());
 
-var SuvCar = (function() {
+var SuvCar = (function () {
     "use strict";
 
     function SuvCar(make, model, year, is4Wheel) {
@@ -48,10 +52,16 @@ var SuvCar = (function() {
 
     SuvCar.prototype = new CarItem();
 
-    SuvCar.prototype.move = function(distance) {
+    SuvCar.prototype.move = function (distance) {
         CarItem.prototype.move.call(this);
         console.log(`${distance}km ahead`);
     };
+
+    SuvCar.prototype.loadLpg = function (petrol, lpg) {
+        console.log('- - - SUV - - -');
+        CarItem.prototype.loadFuel.call(this, petrol);
+        console.log(`LPG: ${lpg}l`);
+    }
 
     return SuvCar;
 }());
@@ -65,6 +75,9 @@ if (vw.isBrandNew) {
 
 console.log(vw.isPremiumVWModel);
 vw.move();
-
+debugger;
 var suv = new SuvCar("VW", "Toureg", 2013, false);
 suv.move(15);
+
+vw.loadFuel(5);
+suv.loadLpg(10, 40);

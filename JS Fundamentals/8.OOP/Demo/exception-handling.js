@@ -1,5 +1,5 @@
 var number = 100;
-
+debugger;
 try {
     console.log(number.reverse());
 } catch (ex) {
