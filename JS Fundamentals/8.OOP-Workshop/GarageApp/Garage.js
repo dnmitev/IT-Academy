@@ -1,35 +1,12 @@
 var Garage = (function () {
     "use strict";
 
-    const MIN_NAME_LENGTH = 3;
-    const MAX_NAME_LENGTH = 40;
-
-    const MIN_LIMIT_VALUE = 0;
-    const MAX_LIMIT_VALUE = 100;
-
-    const VEHICLE_TYPES = ['car', 'truck', 'bike', 'bus'];
-
-    let _vehicles = [];
-
-    function _getLexicographicalSortByMake(first, second) {
-        var firstName = first.make.toLowerCase(),
-            secondName = second.make.toLowerCase();
-
-        if (firstName < secondName) {
-            return -1;
-        } else if (firstName > secondName) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-
     class Garage {
-        constructor(name, limit, typeOfVehicles) {
+        constructor(name, limit) {
             this.name = name;
             this.limit = limit;
-            this.typeOfVehicles = typeOfVehicles;
+
+            this._vehiclesList = [];
         }
 
         get name() {
@@ -37,14 +14,7 @@ var Garage = (function () {
         }
 
         set name(value) {
-            if (typeof (value) !== 'string' || !isNaN(value * 1)) {
-                throw new Error('Name must be a string');
-            } else if (value.length < MIN_NAME_LENGTH) {
-                throw new Error(`Name has invalid length. Name is too short.`);
-            } else if (value.length > MAX_NAME_LENGTH) {
-                throw new Error(`Name is too long`);
-            }
-
+            // TODO: validate
             this._name = value;
         }
 
@@ -52,83 +22,82 @@ var Garage = (function () {
             return this._limit;
         }
 
-        set limit(limitValue) {
-            if (typeof (limitValue) !== 'number') {
-                throw new Error('Limit value should be a number');
-            } else if (limitValue < MIN_LIMIT_VALUE) {
-                throw new Error(`Limit value cannot be below ${MIN_LIMIT_VALUE}`);
-            } else if (limitValue > MAX_LIMIT_VALUE) {
-                throw new Error(`Limit value cannot exceed ${MAX_LIMIT_VALUE}`);
-            }
-
-            this._limit = limitValue;
-        }
-
-        get typeOfVehicles() {
-            return this._typeOfVehicles.toUpperCase();
-        }
-
-        set typeOfVehicles(value) {
-            if (VEHICLE_TYPES.indexOf(value.toLowerCase()) < 0) {
-                throw new Error(`${value} is not a valid vehicle type. Valid vehicle types are: ${VEHICLE_TYPES.join('|')}`);
-            }
-
-            this._typeOfVehicles = value;
+        set limit(value) {
+            // TODO: Validate
+            this._limit = value;
         }
 
         get vehiclesCount() {
-            return _vehicles.length;
+            return this._vehiclesList.length;
         }
 
         addVehicle(vehicle) {
-            if (this.vehiclesCount === this.limit) {
-                throw new Error(`Garage is already full. The limit is ${this.limit}`);
-            } else if (!(vehicle instanceof Vehicle)) {
-                throw new Error('You should add only instances of Vehicle');
+            if (!(vehicle instanceof Vehicle)) {
+                throw new TypeError('Given vehicle is not an instance of Vehicle');
             }
 
-            _vehicles.push(vehicle);
+            if (this.vehiclesCount === this.limit) {
+                throw new Error(`Garage's limit (${this.limit}) was reached.`);
+            }
+
+            this._vehiclesList.push(vehicle);
         }
 
         removeVehicle(licensePlate) {
-            let tempVehicles = [];
-            for (var i = 0; i < _vehicles.length; i++) {
-                let item = _vehicles[i];
-
-                if (item.plate === licensePlate) {
-                    continue;
-                }
-
-                tempVehicles.push(item);
-            }
-
-            _vehicles = tempVehicles;
-        }
-
-        getVehiclesList() {
-            return _vehicles
-                .sort(_getLexicographicalSortByMake)
-                .map(function (vehicle) {
-                    return vehicle.getInfo();
-                })
-                .join('\n');
-        }
-
-        filter(searchValue, propName) {
-            let itemsToReturn = [],
-                item;
-
-            for (let i = 0; i < _vehicles.length; i++) {
-                item = _vehicles[i];
-
-                if (item[propName].toLowerCase() === searchValue.toLowerCase()) {
-                    itemsToReturn.push(item);
+            var vehicles = [];
+            var vehicleRemoved = null;
+            for (let i = 0; i < this._vehiclesList.length; i++) {
+                let vehicle = this._vehiclesList[i];
+                if (vehicle.licensePlate.toLowerCase() != licensePlate.toLowerCase()) {
+                    vehicles.push(vehicle);
+                } else {
+                    vehicleRemoved = vehicle;
                 }
             }
 
-            return itemsToReturn;
+            this._vehiclesList = vehicles;
+
+            return vehicleRemoved;
+        }
+
+        getVehiclesList(property = 'make') {
+            return this._vehiclesList.sort(_sortFactory(property));
+        }
+
+        findVehiclesByMake(make) {
+            var result = _findByProperty(this._vehiclesList, 'make', make);
+            return result;
+        }
+
+        findVehiclesByModel(model) {
+            var result = _findByProperty(this._vehiclesList, 'model', model);
+            return result;
+        }
+
+        findVehiclesByLicensePlate(licensePlate) {
+            var result = _findByProperty(this._vehiclesList, 'licensePlate', licensePlate);
+            return result && result.length == 1 ? result[0] : null;
         }
     }
 
+    // https://stackoverflow.com/a/8539989
+    function _sortFactory(prop) {
+        return function (a, b) {
+            return a[prop].localeCompare(b[prop]);
+        };
+    }
+
+    function _findByProperty(collection, prop, value) {
+        var result = [];
+        for (let i = 0; i < collection.length; i++) {
+            var item = collection[i];
+            if (item[prop].toLowerCase() === value.toLowerCase()) {
+                result.push(item);
+            }
+        }
+
+        return result;
+    }
+
     return Garage;
-} ());
+}());

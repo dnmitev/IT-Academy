@@ -7,68 +7,26 @@ var Vehicle = (function () {
     const MIN_MODEL_LENGTH = 2;
     const MAX_MODEL_LENGTH = 25;
 
-    const PLATE_LENGTH = 8;
+    const LICENSE_PLATE_LENGTH = 8;
 
-    const MIN_TANK_VOLUME = 30;
+    const MAX_DISTANCE = 1000000;
+    const MIN_DISTANCE = 0;
+
     const MAX_TANK_VOLUME = 100;
+    const MIN_TANK_VOLUME = 30;
 
-    const MIN_TOTAL_DISTANCE = 0;
-    const MAX_TOTAL_DISTANCE = 1000000;
-
-    const FUEL_TYPES = ['LPG', 'DIESEL', 'PETROL', 'ELECTRICITY'];
-
-    let _totalDistance = 0;
-    let _currentFuel = 0;
-
-    function _validateString(value, prop) {
-        if (typeof (value) !== 'string' || !isNaN(value * 1)) {
-            throw new Error(`${prop} must be a string`);
-        }
-    }
-
-    function _validateMinLength(value, min, prop) {
-        if (value.length < min) {
-            throw new Error(`${prop} has invalid length. Name is too short.`);
-        }
-    }
-
-    function _validateMaxLength(value, max, prop) {
-        if (value.length > max) {
-            throw new Error(`${prop} is too long`);
-        }
-    }
-
-    function _validateNumber(value, prop) {
-        if (typeof (value) !== 'number' || isNaN(value * 1)) {
-            throw new Error(`${prop} must be a number`);
-        }
-    }
-
-    function _validateMinNumber(value, min, prop) {
-        if (value < min) {
-            throw new Error(`${prop} must be bigger than ${min}`);
-        }
-    }
-
-    function _validateMaxNumber(value, max, prop) {
-        if (value > max) {
-            throw new Error(`${prop} must be less than ${max}`);
-        }
-    }
-
-    function _validateFuelType(value) {
-        if (FUEL_TYPES.indexOf(value.toUpperCase()) < 0) {
-            throw new Error(`${value} is not a valid fuel type. Valid fuel types are: ${FUEL_TYPES.join('|')}`);
-        }
-    }
+    var FUEL_TYPES = ['lpg', 'diesel', 'petrol', 'electriciy'];
 
     class Vehicle {
-        constructor(make, model, plate, tankVolume, fuelType) {
+        constructor(make, model, licensePlate, tankVolume, fuelType) {
             this.make = make;
             this.model = model;
-            this.plate = plate;
+            this.licensePlate = licensePlate;
             this.tankVolume = tankVolume;
             this.fuelType = fuelType;
+
+            this._totalDistance = 0;
+            this._fuelQty = 0;
         }
 
         get make() {
@@ -76,11 +34,10 @@ var Vehicle = (function () {
         }
 
         set make(value) {
-            let propName = 'Make';
-
-            _validateString(value, propName);
-            _validateMinLength(value, MIN_MAKE_LENGTH, propName);
-            _validateMaxLength(value, MAX_MAKE_LENGTH, propName);
+            if (value.length < MIN_MAKE_LENGTH || value.length > MAX_MAKE_LENGTH) {
+                throw new Error(`Insufficient make length: ${value.length};
+                Allowed in range ${MIN_MAKE_LENGTH} - ${MAX_MAKE_LENGTH}`);
+            }
 
             this._make = value;
         }
@@ -90,34 +47,28 @@ var Vehicle = (function () {
         }
 
         set model(value) {
-            let propName = 'Model';
-
-            _validateString(value, propName);
-            _validateMinLength(value, MIN_MODEL_LENGTH, propName);
-            _validateMaxLength(value, MAX_MODEL_LENGTH, propName);
+            if (value.length < MIN_MODEL_LENGTH || value.length > MAX_MODEL_LENGTH) {
+                throw new Error(`Insufficient model length: ${value.length};
+                Allowed in range ${MIN_MODEL_LENGTH} - ${MAX_MODEL_LENGTH}`);
+            }
 
             this._model = value;
         }
 
-        get plate() {
-            return this._plate;
+        get licensePlate() {
+            return this._licensePlate.toUpperCase();
         }
 
-        set plate(value) {
-            let propName = 'Plate';
-
-            _validateString(value, propName);
-
-            try {
-                _validateMinLength(value, PLATE_LENGTH, propName);
-                _validateMaxLength(value, PLATE_LENGTH, propName);
-            } catch (ex) {
-                // since we are reusing the above methods we need to catch their exceptions
-                // and to throw new more adequate exception
-                throw new Error(`Number plate should be exactly ${PLATE_LENGTH}`);
+        set licensePlate(value) {
+            if (value.length !== LICENSE_PLATE_LENGTH) {
+                throw new Error(`License plate: ${value} is invalid`);
             }
 
-            this._plate = value;
+            this._licensePlate = value;
+        }
+
+        get totalDistance() {
+            return this._totalDistance;
         }
 
         get tankVolume() {
@@ -125,11 +76,11 @@ var Vehicle = (function () {
         }
 
         set tankVolume(value) {
-            let propName = 'Tank volume';
-
-            _validateNumber(value, propName);
-            _validateMinNumber(value, MIN_TANK_VOLUME, propName);
-            _validateMaxNumber(value, MAX_TANK_VOLUME, propName);
+            if (typeof (value) !== 'number') {
+                throw new TypeError(`${value} is not a number.`)
+            } else if (value < MIN_TANK_VOLUME || value > MAX_TANK_VOLUME) {
+                throw new RangeError(`${value} is not in range: ${MIN_TANK_VOLUME} - ${MAX_TANK_VOLUME}.`);
+            }
 
             this._tankVolume = value;
         }
@@ -139,51 +90,56 @@ var Vehicle = (function () {
         }
 
         set fuelType(value) {
-            _validateFuelType(value);
+            if (typeof(value) !== 'string') {
+                throw new TypeError(`${value} is not a string`);
+            }
+
+            value = value.trim();
+            
+            if (FUEL_TYPES.indexOf(value.toLowerCase()) < 0) {
+                throw new Error(`Fuel type: ${value} is invalid. Valid: ${FUEL_TYPES.join('|')}`);
+            }
 
             this._fuelType = value;
         }
 
-        get totalDistance() {
-            return _totalDistance;
-        }
-
         move(distance) {
-            let propName = 'Distance to move';
-
-            _validateNumber(distance, propName);
-            _validateMinNumber(distance, MIN_TOTAL_DISTANCE, propName);
-            _validateMaxNumber(distance, MAX_TOTAL_DISTANCE, propName);
-
-            _totalDistance += distance;
-        }
-
-        loadFuel(qty, type) {
-            let propName = 'Qty';
-
-            _validateNumber(qty, propName);
-            _validateMinNumber(qty, 0, propName);
-            _validateMaxNumber(qty, this.tankVolume, propName);
-
-            _validateFuelType(type);
-
-            if (type.toUpperCase() !== this.fuelType.toUpperCase()) {
-                throw new Error(`Cannot load ${type} on vehicle with fuel type of ${this.fuelType}`);
+            var _distance = distance * 1;
+            if (isNaN(distance)) {
+                throw new Error(`Distance: ${distance} is not a number.`);
+            } else if (_distance < 0) {
+                throw new Error(`Distance: ${distance} is negative.`);
             }
 
-            if ((_currentFuel + qty) > this.tankVolume) {
-                _currentFuel = this.tankVolume;
-            } else {
-                _currentFuel += qty;
-            }
+            this._totalDistance += _distance;
 
-            console.log(`${_currentFuel}l of ${this.fuelType}  available`);
+            if (this._totalDistance > MAX_DISTANCE) {
+                this._totalDistance = this._totalDistance - MAX_DISTANCE + MIN_DISTANCE;
+            }
         }
 
-        getInfo() {
-            return `${this.make} | ${this.model} | ${this.plate}`;
+        loadFuel(fuelQty) {
+            var _fuelQty = fuelQty * 1;
+            if (isNaN(_fuelQty)) {
+                throw new TypeError(`${fuelQty} is not a number`);
+            } else if (_fuelQty < 0) {
+                throw new Error('Fuel Qty cannot be negative.')
+            } 
+
+            this._fuelQty += _fuelQty;
+
+            if (this._fuelQty > this.tankVolume) {
+                var leftover = this._fuelQty - this.tankVolume;
+                this._fuelQty = this.tankVolume;
+
+                throw new Error(`Only ${fuelQty-leftover}l were loaded. `)
+            }
+        }
+
+        toString() {
+            return `Make: ${this.make.toUpperCase()}; Model: ${this.model.toUpperCase()}; License Plate: ${this.licensePlate.toUpperCase()}`;
         }
     }
 
     return Vehicle;
-} ());
+}());
