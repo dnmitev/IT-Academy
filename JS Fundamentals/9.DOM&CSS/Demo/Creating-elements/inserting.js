@@ -6,7 +6,13 @@
     var div2 = document.getElementById('div-02');
 
     debugger;
-    newNode.innerHTML = '<p>Sample</p>'
+    //// This is incorrect because it's not error-prone
+    // newNode.innerHTML = '<p>Sample</p>';
+
+    var p = document.createElement('p');
+    p.textContent = "sample";
+    newNode.appendChild(p);
+    
     parent.insertBefore(newNode, div2);
 
 })();

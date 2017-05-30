@@ -8,7 +8,8 @@
     wrapper.style.border = "2px solid green";
     wrapper.style.backgroundColor = "gray";
 
-    // invalid syntax
+    //// invalid syntax
+    //// does not produce error but also does not work
     // wrapper.style = {
     //     'border': "2px solid green",
     //     'backgroundColor': "gray"
