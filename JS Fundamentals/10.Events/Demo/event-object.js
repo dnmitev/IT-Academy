@@ -20,4 +20,10 @@
         }
     });
 
+    var googleBtn = document.getElementById("google");
+    googleBtn.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        // NO Google for you
+    });
+
 })();

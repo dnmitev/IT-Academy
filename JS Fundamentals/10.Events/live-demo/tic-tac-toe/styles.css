@@ -1,0 +1,45 @@
+#wrapper {
+    width: 100%;
+}
+
+h3 {
+    font-family: 'Aref Ruqaa', serif;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    font-size: 60px;
+    padding: 5px 15px;
+}
+
+.empty {
+    background-color: red;
+    color: yellow;
+}
+
+.x-man {
+    background-color: yellow;
+    color: red;
+}
+
+.y-man {
+    background-color: dimgrey;
+    color: white;
+}
+
+.half {
+    width: 30%;
+    float: left;
+}
+
+.no-winner {
+    display: none;
+}

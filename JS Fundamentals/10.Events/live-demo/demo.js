@@ -10,6 +10,7 @@
         div.className += ' added';
         for (var i = 0; i < divs.length; i++) {
             var element = divs[i];
+            debugger;
 
             if ((i + 1) % 2 == 0) {
                 div.id = 'added-'+(i+1); 
