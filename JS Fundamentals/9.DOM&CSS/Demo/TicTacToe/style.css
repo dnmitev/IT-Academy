@@ -1,0 +1,35 @@
+#game-board {
+    border-collapse: collapse;
+    border: 0.25rem solid black;
+    background: gray;
+}
+
+#game-board .field {
+    border: 0.25rem solid black;
+    font-size: 8rem;
+    width: 10rem;
+    height: 10rem;
+    text-align: center;
+}
+
+#game-board .field.x-player {
+    background: blue;
+}
+
+#game-board .field.o-player {
+    background: red;
+}
+
+.heading {
+    text-align: center;
+    font-size: 5rem;
+    text-transform: uppercase;
+}
+
+.hidden {
+    display: none;
+}
+
+table {
+    margin: 0 auto;
+}

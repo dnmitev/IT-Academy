@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TicTacToe</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <h1 class="heading">Tic Tac Toe</h1>
+        <p id="winner" class="winner hidden">
+            The winner is: <span id="winner-symbol"></span>
+            
+            <button id="btn-reset" type="button" class="btn btn-default">Reset Game</button>
+            
+        </p>
+        <table id="game-board">
+            <tr>
+                <td class="field">-</td>
+                <td class="field">-</td>
+                <td class="field">-</td>
+            </tr>
+
+            <tr>
+                <td class="field">-</td>
+                <td class="field">-</td>
+                <td class="field">-</td>
+            </tr>
+
+            <tr>
+                <td class="field">-</td>
+                <td class="field">-</td>
+                <td class="field">-</td>
+            </tr>
+
+        </table>
+    </main>
+
+    <script src="game-validation.js"></script>
+    <script src="tic-tac-toe.js"></script>
+</body>
+
+</html>
