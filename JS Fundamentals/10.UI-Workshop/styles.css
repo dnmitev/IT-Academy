@@ -1,0 +1,71 @@
+body,
+html {
+    overflow: hidden;
+}
+
+#preview-container {
+    width: 70%;
+    padding: 0;
+    margin: 0 auto;
+    float: left;
+    overflow: hidden;
+}
+
+.preview-title {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.preview-img {
+    width: 100%;
+}
+
+#list-container {
+    width: 30%;
+    padding: 0;
+    margin: 0;
+    float: left;
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 40rem;
+}
+
+.img {
+    border-radius: 1rem;
+}
+
+#list-container label {
+    display: block;
+}
+
+#list-container input {
+    width: 90%;
+    padding: 2px 5px;
+}
+
+#list-container ul {
+    list-style: none;
+}
+
+#list-container ul li {
+    padding: 0.5rem 1rem;
+}
+
+#list-container ul li.hovered {
+    background: lightgray;
+}
+
+#list-container ul li h3 {
+    padding: 0;
+    margin: 0;
+}
+
+#list-container ul li img {
+    width: 90%;
+}
+
+.hidden {
+    display: none;
+}
