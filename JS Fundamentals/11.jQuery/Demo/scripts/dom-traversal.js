@@ -9,9 +9,14 @@
     debugger;
 
     var $node = $('.special');
-    console.log($node.parent().attr('id'));
+    console.log($node
+        .parent()
+        .attr('id'));
     debugger;
 
-    console.log($node.parents('#wrapper').attr('id'));
+    console.log($node
+        .parents('#wrapper')
+        .attr('id'));
+    console.log($node.parents());
     debugger;
 })();

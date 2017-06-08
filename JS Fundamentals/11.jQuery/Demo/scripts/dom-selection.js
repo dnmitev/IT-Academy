@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    var firstDiv = $('#first-div');
+    var firstDiv = $('#first-div'); // document.getElementById('first-div');
     console.log(firstDiv);
     debugger;
 
