@@ -1,0 +1,71 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery - Workshop</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div id="root">
+        <div id="gallery">
+            <div class="gallery-list">
+                <div class="image-container">
+                    <img src="imgs/1.jpg" />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/2.jpg"  />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/3.jpg" />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/4.jpg"  />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/5.jpg" />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/6.jpg"  />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/7.jpg" />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/8.jpg"  />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/9.jpg"  />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/10.jpg" />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/11.jpg" />
+                </div>
+                <div class="image-container">
+                    <img src="imgs/12.jpg" />
+                </div>
+            </div>
+            <div class="selected">
+                <div class="previous-image">
+                    <img src="imgs/1.jpg" id="previous-image" />
+                </div>
+                <div class="current-image">
+                    <img src="imgs/2.jpg" id="current-image" />
+                </div>
+                <div class="next-image">
+                    <img src="imgs/3.jpg" id="next-image" />
+                </div>
+            </div>
+        </div>
+	</div>
+	<script src="jquery.min.js"></script>
+	<script src="custom-plugin.js"></script>
+	<script>
+		$(function () {
+			// $('#gallery').gallery(3); // images in 3 columns
+			$('#gallery').gallery(); // images in default (4) columns
+		}); //equals to document.ready()
+	</script>
+</body>
+</html>
