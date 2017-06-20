@@ -17,14 +17,14 @@
             console.log(errorThrown);
         });
 
-    $.post('/data.json', { key: 'value' }, function (result) {
-        console.log(result);
-        debugger;
-    });
+    // $.post('/data.json', { key: 'value' }, function (result) {
+    //     console.log(result);
+    //     debugger;
+    // });
 
-    $.post('/data.json', { key: 'value' })
-        .done(function (result) {
-            console.log(result);
-            debugger;
-        });
+    // $.post('/data.json', { key: 'value' })
+    //     .done(function (result) {
+    //         console.log(result);
+    //         debugger;
+    //     });
 } ());

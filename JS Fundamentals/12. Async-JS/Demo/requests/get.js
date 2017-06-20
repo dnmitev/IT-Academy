@@ -2,7 +2,7 @@
     "use strict";
 
     var movie = null;
-    var imgUrl = 'http://image.tmdb.org/t/p/w500/'
+    var imgUrl = 'http://image.tmdb.org/t/p/w500/';
 
     // $.ajax('https://api.themoviedb.org/3/movie/550?api_key=ee4147bedd685cdebb23042532c92117', {
     //     method: 'GET',
@@ -11,14 +11,22 @@
     //         debugger;
 
     //         movie = response;
+    //         $("#loading").fadeOut(2000);
 
-    //         $('#main').append($('<h2 />').text(movie.title));
-    //         $('#main').append($('<img />').attr('src', imgUrl + movie.poster_path));
+    //         setTimeout(function () {
+    //             var $container = $('<div />');
+
+    //             $container.append($('<h2 />').text(movie.title));
+    //             $container.append($('<img />').attr('src', imgUrl + movie.poster_path));
+
+    //             $('#main').append($container).fadeIn(1000);
+    //         }, 2000);
+    //     },
+    //     error: function (jqXhr, status, error) {
+    //         $("#loading").fadeOut();
+    //         $('#main').append($('<p />').text(error).css('color', 'red'));
     //     }
     // });
-
-    $('#main').html(
-        $('<h1 />').text('Movies'));
 
     // $.getJSON('https://api.themoviedb.org/3/movie/550?api_key=ee4147bedd685cdebb23042532c92117', function (response) {
     //     console.log(response);
@@ -35,7 +43,7 @@
     //         debugger;
     //     });
 
-    // // this would produce an error because the URL is unaouthorized    
+    //// this would produce an error because the URL is unaouthorized    
     $.ajax('https://api.themoviedb.org/3/movie/550?api_key=ee4147bedd685cdebb23042532c92117----------------')
         .done(function (response) {
             console.log(response);
@@ -46,4 +54,4 @@
              $('#main').append($('<h2 />').text('unaouthorized Access!'));
             debugger;
         });
-} ());
+}());
