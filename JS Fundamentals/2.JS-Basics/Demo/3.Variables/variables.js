@@ -1,8 +1,10 @@
 function sayHello() {
-    var greeting = 'Hello!'; // not equal to window.greeting
+    // not equal to window.greeting
+    var greeting = 'Hello!'; 
 
     if  (true) {
-        let greeting = "Zdrasti!";
+        // available just in the block scope of the if-statement
+        let greeting = "Zdrasti!"; 
         console.log(greeting);
     }
 

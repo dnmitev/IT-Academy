@@ -6,12 +6,12 @@
         sideB = document.getElementById('side-b'),
         sideC = document.getElementById('side-c');
 
-    btn.onclick = function(ev) {
+    btn.onclick = function (ev) {
         let a = sideA.value * 1;
         let b = sideB.value * 1;
         let c = sideC.value * 1;
 
-        console.log(a+b+c);
+        console.log(a + b + c);
     }
 
 

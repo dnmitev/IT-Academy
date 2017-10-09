@@ -1,5 +1,5 @@
 var start = 10,
-    end = 20,
+    end = 1000000,
     number, isPrime, divider, maxDivider;
 
 for (var number = start; number <= end; number += 1) {
