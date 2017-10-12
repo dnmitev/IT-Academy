@@ -4,9 +4,9 @@ var nuts = ['Walnut', 'Almond', 'Pistachio'];
 console.log(fruits.join('-|-'));
 
 debugger;
-// var reversedFruits = fruits.reverse();
+var reversedFruits = fruits.reverse();
 debugger;
-// console.log(reversedFruits); // ["Mango", "Apple", "Lemon", "Orange", "Banana"]
+console.log(reversedFruits); // ["Mango", "Apple", "Lemon", "Orange", "Banana"]
 
 debugger;
 var mix = fruits.concat(nuts);
@@ -24,6 +24,6 @@ console.log(fruits.indexOf('Lemon'));
 console.log(fruits.indexOf('Lemon', 3));
 console.log(fruits.lastIndexOf('Lemon'));
 
-fruits.push('Kiwi');;
+fruits.push('Kiwi');
 var a = 'pesho';
 console.log(fruits.join(`---${a}----`));
