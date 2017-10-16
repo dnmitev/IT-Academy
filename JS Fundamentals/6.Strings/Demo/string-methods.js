@@ -29,7 +29,7 @@ console.log(sample.substr(5)); // is a sample string
 console.log(sample.substr(5, 11)); // is a sample
 
 console.log(sample.substring(5)); // is a sample string
-console.log(sample.substring(5, 17)); // is a sample
+console.log(sample.substring(5, 18)); // is a sample
 
 console.log(sample.endsWith('ng'));
 console.log(sample.endsWith('asd'));
