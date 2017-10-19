@@ -40,3 +40,13 @@ btn.addEventListener('click', function () {
     var value = input.value * 1;
     alert(isPrime(value));
 });
+
+// check if return works without semicolumn(;)
+function check() {
+    return {
+        'key': 'value'
+    } // ; - better to insert
+}
+
+var result = check();
+console.log(result);

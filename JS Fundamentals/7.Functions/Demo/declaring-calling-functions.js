@@ -18,7 +18,7 @@ function printMax(number1, number2) {
     debugger;
     var max = number1;
 
-    if (max > number1) {
+    if (max < number2) {
         max = number2;
     }
 

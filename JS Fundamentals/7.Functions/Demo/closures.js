@@ -11,3 +11,10 @@ function outer(x) {
 var sample = outer("IT");
 debugger;
 console.log(sample("Academy"));
+
+function prettify() {
+    var result = outer("my")("pretty");
+    return result + '!!!';
+}
+
+console.log(prettify());

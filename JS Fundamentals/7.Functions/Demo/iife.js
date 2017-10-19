@@ -23,3 +23,20 @@ var today = (function () {
 }());
 
 console.log(today);
+
+var execution = (function(){
+    'use strict';
+
+    var x = 'outer';    
+    var inner = (function() {
+        var x = 'inner';
+        return x;
+    }());
+
+    return {
+        outer: x,
+        inner: inner
+    }
+}());
+
+console.log(execution);
