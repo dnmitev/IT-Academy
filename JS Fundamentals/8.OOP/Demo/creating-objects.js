@@ -12,6 +12,8 @@
     }
 
     var mercedes = new Car('Mercedes', 'E320', 2008);
+    var mercedes1 = new Car('Mercedes', 'E320', 2008);
+    
     var tesla = new Car('Tesla', 'Model S', 2012);
 
     console.log(mercedes);

@@ -31,7 +31,7 @@ var bmw = new Car('BMW', '530d');
 bmw.getDescription();
 bmw.startEngine();
 bmw.putFuel('Diesel', 25.675);
-bmw.getYear();
+console.log(bmw.getYear());
 
 var merc = new Car('merc', 'e320');
 
