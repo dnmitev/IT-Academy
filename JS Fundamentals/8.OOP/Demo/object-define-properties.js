@@ -1,30 +1,30 @@
-var animal = {
-    makeNoise: function() {
-        console.log('The ' + this.type + ' makes noise "' + this.noise + '"');
-    }
-};
+// var animal = {
+//     makeNoise: function() {
+//         console.log('The ' + this.type + ' makes noise "' + this.noise + '"');
+//     }
+// };
 
 
-var dog = (function(parent) {
+// var dog = (function(parent) {
 
-    var dog = Object.defineProperties(parent, {
-        type: {
-            value: 'dog'
-        },
-        noise: {
-            value: 'djaf-djaf-djaf'
-        },
-        bark: {
-            value: function() {
-                console.log('Bark, Bark');
-            }
-        }
-    });
+//     var dog = Object.defineProperties(parent, {
+//         type: {
+//             value: 'dog'
+//         },
+//         noise: {
+//             value: 'djaf-djaf-djaf'
+//         },
+//         bark: {
+//             value: function() {
+//                 console.log('Bark, Bark');
+//             }
+//         }
+//     });
 
-    return dog;
-}(animal));
+//     return dog;
+// }(animal));
 
-dog.makeNoise();
+// dog.makeNoise();
 
 var cat = (function() {
     var cat = Object.create({});
@@ -86,6 +86,7 @@ for (var key in cat) {
     console.log(`${key} --> ${cat[key]}`);
 }
 
+cat.type.enumerable = true;
 debugger;
 cat.name = 'Gergana';
 cat.city = 'plovdiv';

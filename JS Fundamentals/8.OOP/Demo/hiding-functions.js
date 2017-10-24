@@ -53,4 +53,4 @@ var Rect = (function () {
 }());
 
 console.log(new Rect(1, 2, 30, 30).calcArea());
-// console.log(new Rect(-1, 2, 30, 30).calcArea());
+console.log(new Rect(-1, 2, 30, 30).calcArea());
