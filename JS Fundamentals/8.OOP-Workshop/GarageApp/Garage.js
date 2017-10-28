@@ -1,102 +1,66 @@
 var Garage = (function () {
-    "use strict";
+    'use strict';
 
     class Garage {
-        constructor(name, limit) {
+        constructor(name, capacity) {
             this.name = name;
-            this.limit = limit;
+            this.capacity = capacity;
 
-            this._vehiclesList = [];
-        }
-
-        get name() {
-            return this._name;
-        }
-
-        set name(value) {
-            // TODO: validate
-            this._name = value;
-        }
-
-        get limit() {
-            return this._limit;
-        }
-
-        set limit(value) {
-            // TODO: Validate
-            this._limit = value;
-        }
-
-        get vehiclesCount() {
-            return this._vehiclesList.length;
+            this._vehicles = [];
         }
 
         addVehicle(vehicle) {
-            if (!(vehicle instanceof Vehicle)) {
-                throw new TypeError('Given vehicle is not an instance of Vehicle');
+            if (vehicle instanceof Vehicle) {
+                if (this._vehicles.length < this.capacity) {
+                    this._vehicles.push(vehicle);
+                } else {
+                    throw new Error('Garage is full');
+                }
+            } else {
+                throw new TypeError('Only instances of Vehicle can be added');
             }
-
-            if (this.vehiclesCount === this.limit) {
-                throw new Error(`Garage's limit (${this.limit}) was reached.`);
-            }
-
-            this._vehiclesList.push(vehicle);
         }
 
         removeVehicle(licensePlate) {
-            var vehicles = [];
-            var vehicleRemoved = null;
-            for (let i = 0; i < this._vehiclesList.length; i++) {
-                let vehicle = this._vehiclesList[i];
-                if (vehicle.licensePlate.toLowerCase() != licensePlate.toLowerCase()) {
-                    vehicles.push(vehicle);
+            let vehicles = [];
+            let removed = null;
+            for (let i = 0; i < this._vehicles.length; i++) {
+                let current = this._vehicles[i];
+                if (current.licensePlate.toUpperCase() !== licensePlate.toUpperCase()) {
+                    vehicles.push(current);
                 } else {
-                    vehicleRemoved = vehicle;
+                    removed = current;
                 }
             }
 
-            this._vehiclesList = vehicles;
-
-            return vehicleRemoved;
+            this._vehicles = vehicles;
+            
+            return removed;
         }
 
-        getVehiclesList(property = 'make') {
-            return this._vehiclesList.sort(_sortFactory(property));
+        getVehiclesListSorted() {
+            return this._vehicles.sort((vehicle1, vehicle2) => {
+                var make1 = vehicle1.make.toUpperCase();
+                var make2 = vehicle2.make.toUpperCase();
+
+                if (make1 < make2) return -1;
+                if (make1 > make2) return 1;
+
+                return 0;
+            });
         }
 
-        findVehiclesByMake(make) {
-            var result = _findByProperty(this._vehiclesList, 'make', make);
-            return result;
-        }
-
-        findVehiclesByModel(model) {
-            var result = _findByProperty(this._vehiclesList, 'model', model);
-            return result;
-        }
-
-        findVehiclesByLicensePlate(licensePlate) {
-            var result = _findByProperty(this._vehiclesList, 'licensePlate', licensePlate);
-            return result && result.length == 1 ? result[0] : null;
-        }
-    }
-
-    // https://stackoverflow.com/a/8539989
-    function _sortFactory(prop) {
-        return function (a, b) {
-            return a[prop].localeCompare(b[prop]);
-        };
-    }
-
-    function _findByProperty(collection, prop, value) {
-        var result = [];
-        for (let i = 0; i < collection.length; i++) {
-            var item = collection[i];
-            if (item[prop].toLowerCase() === value.toLowerCase()) {
-                result.push(item);
+        searchForVehicle(searchParam) {
+            for (let i =0; i < this._vehicles.length; i++) {
+                var current = this._vehicles[i];
+                if (current.make.toUpperCase() === searchParam.toUpperCase()
+                    || current.model.toUpperCase() === searchParam.toUpperCase()
+                    || current.licensePlate.toUpperCase() === searchParam.toUpperCase()
+                ) {
+                    return current;
+                }
             }
         }
-
-        return result;
     }
 
     return Garage;

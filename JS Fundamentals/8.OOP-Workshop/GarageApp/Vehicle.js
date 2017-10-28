@@ -1,21 +1,21 @@
 var Vehicle = (function () {
-    "use strict";
+    'use strict';
 
-    const MIN_MAKE_LENGTH = 2;
-    const MAX_MAKE_LENGTH = 25;
+    let _validator = new Validator("Vehicle");
+    let FUEL_TYPES = ['lpg', 'diesel', 'petrol', 'electriciy'];
 
-    const MIN_MODEL_LENGTH = 2;
-    const MAX_MODEL_LENGTH = 25;
+    const MIN_MAKE_LENGHT = 2;
+    const MAX_MAKE_LENGHT = 25;
 
-    const LICENSE_PLATE_LENGTH = 8;
+    const MIN_MODEL_LENGHT = 2;
+    const MAX_MODEL_LENGHT = 25;
 
-    const MAX_DISTANCE = 1000000;
-    const MIN_DISTANCE = 0;
+    const LICENSE_PLATE_LENGHT = 8;
 
-    const MAX_TANK_VOLUME = 100;
+    const MAX_MILIAGE = 1000000;
+
     const MIN_TANK_VOLUME = 30;
-
-    var FUEL_TYPES = ['lpg', 'diesel', 'petrol', 'electriciy'];
+    const MAX_TANK_VOLUME = 100;
 
     class Vehicle {
         constructor(make, model, licensePlate, tankVolume, fuelType) {
@@ -23,10 +23,11 @@ var Vehicle = (function () {
             this.model = model;
             this.licensePlate = licensePlate;
             this.tankVolume = tankVolume;
-            this.fuelType = fuelType;
 
-            this._totalDistance = 0;
-            this._fuelQty = 0;
+            _validator.validateIfCollectionContains(fuelType, FUEL_TYPES);
+            this._fuelType = fuelType;
+            this._miliage = 0;
+            this._fuel = 0;
         }
 
         get make() {
@@ -34,11 +35,7 @@ var Vehicle = (function () {
         }
 
         set make(value) {
-            if (value.length < MIN_MAKE_LENGTH || value.length > MAX_MAKE_LENGTH) {
-                throw new Error(`Insufficient make length: ${value.length};
-                Allowed in range ${MIN_MAKE_LENGTH} - ${MAX_MAKE_LENGTH}`);
-            }
-
+            _getPropValidated(value, "make", MIN_MAKE_LENGHT, MAX_MAKE_LENGHT, "string", null);
             this._make = value;
         }
 
@@ -47,28 +44,21 @@ var Vehicle = (function () {
         }
 
         set model(value) {
-            if (value.length < MIN_MODEL_LENGTH || value.length > MAX_MODEL_LENGTH) {
-                throw new Error(`Insufficient model length: ${value.length};
-                Allowed in range ${MIN_MODEL_LENGTH} - ${MAX_MODEL_LENGTH}`);
-            }
-
+            _getPropValidated(value, "model", MIN_MODEL_LENGHT, MAX_MODEL_LENGHT, "string", null);
             this._model = value;
         }
 
         get licensePlate() {
-            return this._licensePlate.toUpperCase();
+            return this._licensePlate;
         }
 
         set licensePlate(value) {
-            if (value.length !== LICENSE_PLATE_LENGTH) {
-                throw new Error(`License plate: ${value} is invalid`);
-            }
-
+            _getPropValidated(value, "licensePlate", null, null, "string", LICENSE_PLATE_LENGHT);
             this._licensePlate = value;
         }
 
-        get totalDistance() {
-            return this._totalDistance;
+        get miliage() {
+            return this._miliage;
         }
 
         get tankVolume() {
@@ -76,68 +66,54 @@ var Vehicle = (function () {
         }
 
         set tankVolume(value) {
-            if (typeof (value) !== 'number') {
-                throw new TypeError(`${value} is not a number.`)
-            } else if (value < MIN_TANK_VOLUME || value > MAX_TANK_VOLUME) {
-                throw new RangeError(`${value} is not in range: ${MIN_TANK_VOLUME} - ${MAX_TANK_VOLUME}.`);
-            }
-
+            _getPropValidated(value, 'tankVolume', MIN_TANK_VOLUME, MAX_TANK_VOLUME, "number")
             this._tankVolume = value;
         }
 
         get fuelType() {
-            return this._fuelType;
+            return this._fuelType.toUpperCase();
         }
 
-        set fuelType(value) {
-            if (typeof(value) !== 'string') {
-                throw new TypeError(`${value} is not a string`);
-            }
-
-            value = value.trim();
-            
-            if (FUEL_TYPES.indexOf(value.toLowerCase()) < 0) {
-                throw new Error(`Fuel type: ${value} is invalid. Valid: ${FUEL_TYPES.join('|')}`);
-            }
-
-            this._fuelType = value;
+        get fuel() {
+            return this._fuel;
         }
 
         move(distance) {
-            var _distance = distance * 1;
-            if (isNaN(distance)) {
-                throw new Error(`Distance: ${distance} is not a number.`);
-            } else if (_distance < 0) {
-                throw new Error(`Distance: ${distance} is negative.`);
+            if (distance > 0) {
+                this._miliage += distance;
+                if (this._miliage >= MAX_MILIAGE) {
+                    this._miliage = this._miliage - MAX_MILIAGE;
+                }
             }
 
-            this._totalDistance += _distance;
-
-            if (this._totalDistance > MAX_DISTANCE) {
-                this._totalDistance = this._totalDistance - MAX_DISTANCE + MIN_DISTANCE;
-            }
+            return this._miliage;
         }
 
-        loadFuel(fuelQty) {
-            var _fuelQty = fuelQty * 1;
-            if (isNaN(_fuelQty)) {
-                throw new TypeError(`${fuelQty} is not a number`);
-            } else if (_fuelQty < 0) {
-                throw new Error('Fuel Qty cannot be negative.')
-            } 
+        loadFuel(volume) {
+            if (volume < 0) return;
 
-            this._fuelQty += _fuelQty;
-
-            if (this._fuelQty > this.tankVolume) {
-                var leftover = this._fuelQty - this.tankVolume;
-                this._fuelQty = this.tankVolume;
-
-                throw new Error(`Only ${fuelQty-leftover}l were loaded. `)
+            this._fuel += volume;
+            if (this._fuel > this.tankVolume) {
+                this._fuel = this.tankVolume
             }
         }
 
         toString() {
-            return `Make: ${this.make.toUpperCase()}; Model: ${this.model.toUpperCase()}; License Plate: ${this.licensePlate.toUpperCase()}`;
+            return `${this.make.toUpperCase()} --- ${this.model.toUpperCase()} | ${this.licensePlate}`;
+        }
+    }
+
+    function _getPropValidated(value, name, min, max, type, exactLength) {
+        if (type) {
+            _validator.validateType(value, type, name);
+        }
+
+        if (exactLength) {
+            _validator.validateExactLength(value, exactLength, name);
+        }
+
+        if (min && max) {
+            _validator.validateLength(value, min, max, name, type);
         }
     }
 
