@@ -1,4 +1,4 @@
-(function() {
+(function () {
     "use strict";
 
     var wrapper = document.getElementById('wrapper');
@@ -10,6 +10,12 @@
     myElement.appendChild(articleHeader);
 
     wrapper.appendChild(myElement);
+
+    //// Please do not use this
+    // wrapper.innerHTML = 
+    // '<article>\
+    //     <h3>Title</h3>\
+    // </article>';
 
     // wrapper.innerHTML = '<div style="color:blue;">Blue text</div>';
 

@@ -1,8 +1,8 @@
 (function() {
     "use strict";
 
-    var divs = document.getElementsByTagName('div');
-    // var divs = document.querySelectorAll('div');
+    // var divs = document.getElementsByTagName('div');
+    var divs = document.querySelectorAll('div');
 
     console.log(divs instanceof Array);
     console.log(divs instanceof HTMLCollection);
