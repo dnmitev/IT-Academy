@@ -2,117 +2,82 @@ var Image = (function () {
     "use strict";
 
     var previewContainer = document.createElement('div'),
-        previewTitle = document.createElement('h1'),
-        previewImg = document.createElement('img'),
         listContainer = document.createElement('div'),
-        label = document.createElement('label'),
-        filter = document.createElement('input'),
         imgList = document.createElement('ul'),
         imgListItem = document.createElement('li'),
-        imgListItemTitle = document.createElement('h3'),
-        imgListItemImg = document.createElement('img');
+        img = document.createElement('img'),
+        title = document.createElement('h3'),
+        previewTitle = document.createElement('h1'),
+        filter = document.createElement('input'),
+        label = document.createElement('label'),
+        docFragment = document.createDocumentFragment();
 
-    function createImagesPreviewer(selector, items) {
+    var _createImagesPreviewer = function (selector, collection) {
         var container = document.querySelector(selector);
 
-        _adjustPreviewContainer(items);
-        _adjustListContainer(items);
+        _initPreviewContainer(collection);
+        _initListContainer(collection);
 
-        _attachEventListeners();
+        listContainer.querySelectorAll('#list-container ul li').forEach(function (el) {
+            el.addEventListener('click', _onImgListItemClick);
+        });
 
-        container.appendChild(previewContainer);
-        container.appendChild(listContainer);
+        docFragment.appendChild(previewContainer);
+        docFragment.appendChild(listContainer);
+
+        container.appendChild(docFragment);
     }
 
     return {
-        createImagesPreviewer: createImagesPreviewer
-    }
+        createImagesPreviewer: _createImagesPreviewer
+    };
 
-    function _adjustPreviewContainer(items) {
-        _setElementId(previewContainer, 'preview-container');
-        _setElementId(listContainer, 'list-container');
+    function _initPreviewContainer(collection) {
+        previewContainer.id = 'preview-container';
 
-        _setClassNames(previewTitle, 'preview-title');
-        _setTextContent(previewTitle, items[0].title);
-
-        _setClassNames(previewImg, 'img preview-img');
-
-        _setImg(previewImg, items[0].url, items[0].title);
+        previewTitle.innerText = collection[0].title;
+        previewTitle.className += ' preview-title';
 
         previewContainer.appendChild(previewTitle);
-        previewContainer.appendChild(previewImg);
+
+        img.src = collection[0].url;
+        img.alt = collection[0].title;
+
+        img.className += ' preview-img img';
+
+        previewContainer.appendChild(img.cloneNode(true));
     }
 
-    function _adjustListContainer(items) {
-        _setLabel(label, 'filter');
-        _setInput(filter);
+    function _initListContainer(collection) {
+        listContainer.id = 'list-container';
+        filter.id = 'filter';
 
-        _setClassNames(imgList, 'img-list');
-        _setClassNames(imgListItem, 'img-list-item');
-        _setClassNames(imgListItemImg, 'img');
+        filter.addEventListener('keyup', _onFilterKeyUp);
 
-        _setListItem(items);
+        label.htmlFor = 'filter';
+        label.innerText = 'Filter';
 
         listContainer.appendChild(label);
         listContainer.appendChild(filter);
+
+        img.className = img.className.replace('preview-img', '');
+
+        _processCollection(collection);
+
         listContainer.appendChild(imgList);
     }
 
-    function _setElementId(element, id) {
-        element.id = id;
-    }
+    function _processCollection(collection) {
+        for (var i = 0; i < collection.length; i++) {
+            var current = collection[i];
 
-    function _setClassNames(element, names) {
-        element.className += ` ${names}`;
-    }
+            title.innerText = current.title;
+            img.src = current.url;
 
-    function _setTextContent(element, text) {
-        element.textContent = text;
-    }
-
-    function _setImg(img, src, alt) {
-        img.src = src;
-        img.alt = alt;
-    }
-
-    function _setLabel(label, forId, text) {
-        text = text || 'Filter';
-
-        label.htmlFor = forId;
-        _setTextContent(label, text);
-    }
-
-    function _setInput(input, type, id) {
-        id = id || 'filter';
-        type = type || 'text';
-
-        _setElementId(input, id);
-        input.type = type;
-
-        input.addEventListener('input', _onFilterInput);
-    }
-
-    function _setListItem(items) {
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i];
-
-            _setTextContent(imgListItemTitle, item.title);
-            _setImg(imgListItemImg, item.url, item.title);
-
-            imgListItem.appendChild(imgListItemTitle);
-            imgListItem.appendChild(imgListItemImg);
+            imgListItem.appendChild(title);
+            imgListItem.appendChild(img);
 
             imgList.appendChild(imgListItem.cloneNode(true));
-        }
-    }
-
-    function _attachEventListeners() {
-        var listItems = imgList.children;
-        for (var i = 0; i < listItems.length; i++) {
-            var item = listItems[i];
-            item.addEventListener('click', _onImgListItemClick);
-            item.addEventListener('mouseover', _onImgListItemMouseOver);
-            item.addEventListener('mouseout', _onImgListItemMouseOut);
         }
     }
 
@@ -120,42 +85,31 @@ var Image = (function () {
         ev.preventDefault();
         var that = this;
 
-        var clickedImg = that.querySelector('img');
-        var clickedTitle = that.querySelector('h3');
+        var title = that.querySelector('h3').innerText;
+        var imgUrl = that.querySelector('img').src;
 
-        _setTextContent(previewTitle, clickedTitle.textContent);
-        _setImg(previewImg, clickedImg.src, clickedImg.alt || clickedTitle.textContent);
+        previewTitle.innerText = title;
+        previewContainer.querySelector('img').src = imgUrl;
     }
 
-    function _onFilterInput(ev) {
+    function _onFilterKeyUp(ev) {
         ev.preventDefault();
+
         var that = this;
-        var searchTerm = that.value;
 
-        var listItems = imgList.children;
-        for (var i = 0; i < listItems.length; i++) {
-            var item = listItems[i];
-            item.className = item.className.replace('hidden', '');
-        }
+        listContainer.querySelectorAll('#list-container ul li')
+            .forEach(function (el) {
+                el.className = el.className.replace('hidden', '');
+            });
 
-        for (var i = 0; i < listItems.length; i++) {
-            var item = listItems[i];
-            var title = item.querySelector('h3').textContent;
-            if (title.toLowerCase().indexOf(searchTerm.toLowerCase()) < 0) {
-                if (item.className.indexOf('hidden') < 0) {
-                    _setClassNames(item, 'hidden');
+        listContainer.querySelectorAll('#list-container ul li')
+            .forEach(function (el) {
+                var title = el.querySelector('h3').innerText.trim().toLowerCase();
+                if (!title.startsWith(that.value.toLowerCase())) {
+                    el.className += ' hidden';
+                } else {
+                    el.className = el.className.replace('hidden', '');
                 }
-            }
-        }
-    }
-
-    function _onImgListItemMouseOver(ev) {
-        ev.preventDefault();
-        _setClassNames(this, 'hovered');
-    }
-
-    function _onImgListItemMouseOut(ev) {
-        ev.preventDefault();
-        this.className = this.className.replace('hovered', '');
+            });
     }
 }());

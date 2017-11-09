@@ -1,0 +1,23 @@
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    padding: 5rem 5rem;
+    text-align: center;
+    font-size: 3rem;
+    background-color: lightgray;
+    text-transform: uppercase;
+}
+
+.x-player {
+    background-color: lightblue;
+}
+
+.o-player {
+    background-color: lightgreen;
+}
