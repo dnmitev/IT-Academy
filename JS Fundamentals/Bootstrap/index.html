@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bootstrap</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="inp-month" class="sr-only">Month</label>
+                <input type="number" min="1" max="12" step="1" class="form-control" id="inp-month" placeholder="Month">
+            </div>
+            <div class="form-group mx-sm-3">
+                <label for="inp-year" class="sr-only">Year</label>
+                <input type="number" min="2000" step="1" class="form-control" id="inp-year" placeholder="Year">
+            </div>
+            <button id="btn-get-calendar" type="button" class="btn btn-primary">Confirm identity</button>
+        </form>
+    </div>
+
+    <div id="calendar-view" class="container" hidden>
+        <table class="table table-dark table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col">Sunday</th>
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
+                    <th scope="col">Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="monday"></td>
+                    <td class="tuesday"></td>
+                    <td class="wednesday"></td>
+                    <td class="thursay"></td>
+                    <td class="friday"></td>
+                    <td class="saturday"></td>
+                    <td class="sunday"></td>
+                </tr>
+
+                <tr>
+                    <td class="monday"></td>
+                    <td class="tuesday"></td>
+                    <td class="wednesday"></td>
+                    <td class="thursay"></td>
+                    <td class="friday"></td>
+                    <td class="saturday"></td>
+                    <td class="sunday"></td>
+                </tr>
+
+                <tr>
+                    <td class="monday"></td>
+                    <td class="tuesday"></td>
+                    <td class="wednesday"></td>
+                    <td class="thursay"></td>
+                    <td class="friday"></td>
+                    <td class="saturday"></td>
+                    <td class="sunday"></td>
+                </tr>
+
+                <tr>
+                    <td class="monday"></td>
+                    <td class="tuesday"></td>
+                    <td class="wednesday"></td>
+                    <td class="thursay"></td>
+                    <td class="friday"></td>
+                    <td class="saturday"></td>
+                    <td class="sunday"></td>
+                </tr>
+
+                <tr>
+                    <td class="monday"></td>
+                    <td class="tuesday"></td>
+                    <td class="wednesday"></td>
+                    <td class="thursay"></td>
+                    <td class="friday"></td>
+                    <td class="saturday"></td>
+                    <td class="sunday"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+
+    <script src="calendar.js"></script>
+</body>
+
+</html>

@@ -14,4 +14,8 @@
 
     debugger;
     $("div").remove(".hello");
+
+    $('#lorem').append(
+        $('<div />').text('sample text content')
+    );
 })();
