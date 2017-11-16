@@ -1,86 +1,69 @@
 $.fn.gallery = function (col) {
     var $gallery = this,
+        $galleryList = $gallery.find('.gallery-list'),
         $selected = $gallery.find('.selected'),
-        $imgs = $gallery.find('.gallery-list img');
+        $imageContainers = $galleryList.find('.image-container'),
+        $currentImage = $selected.find('#current-image'),
+        $prevImage = $selected.find('#previous-image'),
+        $nextImage = $selected.find('#next-image'),
+        galleryWidth = $gallery.outerWidth();   
 
     col = col || 4;
 
-    var infoCounter = 0;
-    $imgs.each(function (index, element) {
-        var $element = $(element);
-        $element.attr('data-info', infoCounter)
-            .parent()
-            .css('width', `${98/col}%`);
+    $imageContainers.css('width', 
+        ((galleryWidth * 0.95) / col) + 'px');
 
-        infoCounter++;
-    });
-
-    $gallery.addClass('gallery')
-        .find('.gallery-list')
-        .addClass('clearfix');
-
+    $gallery.addClass('gallery clearfix');
     $selected.hide();
 
-    attachClickOnImgs();
-
-    $gallery.on('click', '.disabled-background', function (ev) {
-        var $this = $(this);
-        $this.find('.image-container img')
-            .off('click');
-    });
-
-    $selected.on('click', '.current-image', function (ev) {
+    $imageContainers.click(function (ev) {
         ev.preventDefault();
 
-        $gallery.find('.gallery-list')
-            .removeClass('blurred disabled-background');
+        var $this = $(this);
+        var index = $imageContainers.get().indexOf(this);
 
-        $selected.hide();
-        attachClickOnImgs();
+        $selected.show();
+        _setupSelectedView(index, $imageContainers.length);
     });
 
-    adjustImageEvent('.previous-image img');
-    adjustImageEvent('.next-image img');
+    $currentImage.click(function (ev) {
+        ev.preventDefault();
+        $galleryList
+            .removeClass('blurred disabled-background clearfix');
+        $selected.fadeOut(1000);
+    });
 
-    function attachClickOnImgs() {
-        $imgs.click(function (ev) {
-            ev.preventDefault();
+    $selected.on('click', '.previous-image, .next-image', function (ev) {
+        ev.preventDefault();
+        var $this = $(this);
+        var index = $this
+            .find('img')
+            .data('info');
 
-            var $this = $(this),
-                index = $this.data("info");
+        _setupSelectedView(index, $imageContainers.length);
+    });
 
-            $selected.show();
-            $gallery.find('.gallery-list')
-                .addClass('blurred disabled-background');
+    function _setupSelectedView(index, total) {
+        var nextIndex = index + 1 >= total ? 0 : index + 1;
+        var prevIndex = index - 1;
 
-            adjustSelectedContainer(index, $this);
-        });
+        var current = $imageContainers.get(index);
+        var next = $imageContainers.get(nextIndex);
+        var prev = $imageContainers.get(prevIndex);
+
+        $selected.show();
+        $galleryList
+            .addClass('blurred disabled-background');
+
+        _setupSelectedImageContainer(index, current, $currentImage);
+        _setupSelectedImageContainer(nextIndex, next, $nextImage);
+        _setupSelectedImageContainer(prevIndex, prev, $prevImage);
     }
 
-    function adjustSelectedContainer(index, element) {
-        $selected.find('.current-image')
-            .html('')
-            .append(element.clone());
-
-        $selected.find('.previous-image')
-            .html('')
-            .append($($imgs.get(index - 1)).clone());
-
-        $selected.find('.next-image')
-            .html('')
-            .append(
-                $($imgs.get((index + 1) >= $imgs.length ? 0 : index + 1))
-                .clone());
-    }
-
-    function adjustImageEvent(selector) {
-        $selected.on('click', selector, function (ev) {
-            ev.preventDefault();
-
-            var $this = $(this),
-                index = $this.data("info");
-
-            adjustSelectedContainer(index, $this);
-        });
+    function _setupSelectedImageContainer(index, element, $element) {
+        $element
+            .attr('src', $(element).find('img').attr('src'));
+        $element
+            .data('info', index);
     }
 };
