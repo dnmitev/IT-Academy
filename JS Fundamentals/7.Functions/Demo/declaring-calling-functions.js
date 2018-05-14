@@ -53,3 +53,4 @@ function greet(name) {
 }
 
 greet('Bai Dancho');
+greet();

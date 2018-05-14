@@ -32,8 +32,8 @@ function outer() {
     }
 
     return {
-        x: x,
-        f: inner()
+        f: inner(),
+        x: x        
     };
 }
 
