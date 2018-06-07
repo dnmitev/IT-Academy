@@ -21,7 +21,7 @@ var Rect = (function () {
     function Rect(x, y, width, height) {
         this._x = x;
         this._y = y;
-        if (!validatePosition.apply(this)) {
+        if (!validatePosition.call(this)) {
             debugger;
             throw new Error('Invalid Rect position');
         }

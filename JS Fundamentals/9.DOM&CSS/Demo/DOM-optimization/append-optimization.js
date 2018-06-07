@@ -1,7 +1,7 @@
 (function () {
     "use strict";
 
-    // var list = document.getElementById('list');
+    var list = document.getElementById('list');
     // for (var i = 0; i < 100000; i++) {
     //     var li = document.createElement('li');
     //     li.innerText = "List item#" + (i + 1);
@@ -30,6 +30,6 @@
         fragment.appendChild(item.cloneNode(true));
     }
 
-    // debugger;
+    // // debugger;
     list.appendChild(fragment);
 })();

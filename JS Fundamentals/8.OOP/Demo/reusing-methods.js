@@ -98,12 +98,15 @@ var johny =
 console.log(johny.toString());
 console.log(johny.breed);
 
+debugger;
+
 var sven = Object
     .create(sheep)
     .init('Sven', 10, 'black');
 console.log(sven.toString());
 console.log(sven.color);
 
+debugger;
 var fifi = Object
     .create(miniDog)
     .init('Fifi', 1, 'yorki');

@@ -25,7 +25,7 @@ btn.addEventListener('click', function () {
 
     setInterval(function () {
         counter = 0;
-    }, 2000);
+    }, 5000);
 }, false);
 
 btn.addEventListener('mouseover', function (ev) {
@@ -33,5 +33,5 @@ btn.addEventListener('mouseover', function (ev) {
 });
 
 img.addEventListener('contextmenu', function (ev) {
-    debugger;
+    // debugger;
 });

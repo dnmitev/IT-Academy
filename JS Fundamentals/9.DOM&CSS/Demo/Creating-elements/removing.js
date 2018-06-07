@@ -5,6 +5,6 @@
     var team = teams.getElementsByTagName("li")[3];
 
     debugger;
-    teams.removeChild(team);
-    // team.parentNode.removeChild(team);
+    // teams.removeChild(team);
+    team.parentNode.removeChild(team);
 })();

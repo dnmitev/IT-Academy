@@ -1,4 +1,5 @@
 // // adding a repeat method to the String type
+debugger;
 String.prototype.repeat = function(count) {
     var pattern = this;
     var str = '';

@@ -8,5 +8,5 @@
 
     console.log(lead);
     debugger;
-    lead.innerText = '<img src="https://i.ytimg.com/vi/3Xo77XKZGIc/maxresdefault.jpg" />';
+    lead.innerHTML = '<img src="https://i.ytimg.com/vi/3Xo77XKZGIc/maxresdefault.jpg" />';
 })();
